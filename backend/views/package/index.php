@@ -48,7 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'action' => Url::to(['search'])
                     ]); ?>
 
-                    <?= $form->field($m1, 'link_name') ?>
+                    <?= $form->field($m1, 'link_name',[
+                            //"placeholder" => '多個關機字已 $ 進行分割'
+                    ]) ?>多個關機字已 $ 進行分割
 
                     <div class="form-group">
                         <?= Html::submitButton('新增关键字搜索') ?>
@@ -76,14 +78,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                     'attribute' => 'name',
                 'value'=> function($model){
-                    $v = $model->name;
-                    $v .= " &nbsp;&nbsp;&nbsp;&nbsp;<a href='/watchingapp/icon/{$model->package_name}.png' target='_blank'>icon</a>";
-                    $v .= "&nbsp;&nbsp;&nbsp;&nbsp;<a href='/watchingapp/detail/{$model->package_name}.png' target='_blank'>detail</a>";
-                    return $v;
+                    return "<a href='https://play.google.com/store/apps/details?id={$model->package_name}' target='_blank'>$model->name</a>";
                 },
                 'format' => 'raw',
             ],
-            'package_name',
+            [
+                'attribute' => 'package_name',
+                'value'=> function($model){
+                    return "<a href='https://play.google.com/store/apps/details?id={$model->package_name}' target='_blank'>$model->package_name</a>";
+                },
+                'format' => 'raw',
+            ],
             'link_name',
             'star',
             'is_down',

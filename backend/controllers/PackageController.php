@@ -69,17 +69,27 @@ class PackageController extends BaseController
 
             $pythonfile = Yii::getAlias("@root/web/watchingapp/google_play.py");
 
-            $key = str_replace(' ','-',$m->link_name);
-            if(StringHelper::isWindowsOS())
-                $cmd = " python {$pythonfile} $key";
-            else
-                $cmd = " python3 {$pythonfile} $key";
+            $i = 0;
+            $aryKey = explode('$', trim($m->link_name));
+            foreach ($aryKey as $key) {
 
-            $jobid  = Yii::$app->queue->push(new PackageSearchJob([
-                'cmd' => $cmd,
-            ]));
+                $key = str_replace(' ', '-', $key);
+                if (StringHelper::isWindowsOS())
+                    $cmd = " python {$pythonfile} $key";
+                else
+                    $cmd = " python3 {$pythonfile} $key";
 
-            Yii::$app->session->setFlash('success', 'jobid '.$jobid);
+                $jobid = Yii::$app->queue->push(new PackageSearchJob([
+                    'cmd' => $cmd,
+                ]));
+
+                if($jobid){
+                    $i++;
+                }
+
+            }
+
+            Yii::$app->session->setFlash('success', '放入了'.$i.'個關鍵字進行搜索');
         }catch (\Exception $e){
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
