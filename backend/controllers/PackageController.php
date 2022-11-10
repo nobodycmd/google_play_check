@@ -79,7 +79,7 @@ class PackageController extends BaseController
                 else
                     $cmd = " python3 {$pythonfile} $key";
 
-                $jobid = Yii::$app->queue->push(new PackageSearchJob([
+                $jobid = Yii::$app->services->package->getQueue('q0')->push(new PackageSearchJob([
                     'cmd' => $cmd,
                 ]));
 
