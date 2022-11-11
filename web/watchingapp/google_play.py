@@ -42,10 +42,10 @@ class gp(object):
 
         port = random.randint(9515,9517)
         port = str(port)
-        self.driver = webdriver.Remote("http://127.0.0.1:"+port+"/wd/hub", options=chrome_option)
+        self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
         self.driver.set_window_size(1440, 900)
 
-        self.api = 'http://192.168.1.27/api/v1'
+        self.api = 'http://gg.lucktp.com/api/v1'
 
     def search(self, name):
         try:
