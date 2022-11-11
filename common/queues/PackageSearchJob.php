@@ -32,7 +32,7 @@ class PackageSearchJob extends BaseObject implements \yii\queue\JobInterface
             else
                 $cmd = " python3 {$pythonfile} $key";
 
-            exec($this->cmd, $output);
+            exec($cmd, $output);
             @file_put_contents(Yii::getAlias("@root/web/log_search"), json_encode($output));
         }catch (\Exception $e){}
     }
