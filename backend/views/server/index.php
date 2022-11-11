@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'url:url',
             'lastchecktime:datetime',
             'isokay',
-            'enable',
             [
                 'attribute' => 'enable',
                 'value' => function($model){
