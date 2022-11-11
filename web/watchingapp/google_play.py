@@ -152,7 +152,7 @@ class gp(object):
             except:
                 desc = '-'
             try:
-                update_time = self.driver.find_element(By.CLASS_NAME,'TKjAsc').get_attribute('innerHTML')
+                update_time = self.driver.find_element(By.CLASS_NAME,'TKjAsc').get_attribute('textContent')
             except:
                 update_time = '-'
             
