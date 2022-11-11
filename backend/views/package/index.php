@@ -84,7 +84,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_down',
             'check_datetime:datetime',//create_time
             'create_time:datetime',
-            'update_time',
+            [
+                    'header'=>'包更新时间',
+                'attribute' => 'update_time'
+            ],
             'position',
             'download',
 //            'contact:html',
