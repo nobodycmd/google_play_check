@@ -48,7 +48,7 @@ class WatchingPackage extends \yii\db\ActiveRecord
             [['star'], 'number'],
             [['contact', 'desc'], 'string'],
             [['package_name', 'link_name', 'name', 'company', 'download'], 'string', 'max' => 255],
-            [['queue_status', 'jobid', 'update_time'], 'string', 'max' => 50],
+            [['queue_status', 'jobid', 'update_time'], 'string', 'max' => 500],
         ];
     }
 
