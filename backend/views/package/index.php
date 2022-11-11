@@ -121,11 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
 //                ],
 //            ],
 //            'jobid',
-            'desc:html',
             [
                     'header' => '详情',
                 'value' => function($model){
-        $s = "<div id='des{$model->id}' style='display: none'>{$model->desc}</div>";
+        $s = "<div id='des{$model->id}' style='display: none'  onclick=\"document.getElementById('des{$model->id}').style.display = 'none'\">{$model->desc}</div>";
         $s .= "<a onclick=\"document.getElementById('des{$model->id}').style.display = document.getElementById('des{$model->id}').style.display=='none'?'':'none'\">查看详情</a>";
         return $s;
                 },
