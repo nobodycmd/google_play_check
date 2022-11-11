@@ -24,21 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header">
                 <h3 class="box-title">
 
-                   <?php
-//                    echo common\widgets\webuploader\Files::widget([
-//                        'name' => 'file',
-//                        'config' => [
-//                            'pick' => [
-//                                'multiple' => false,
-//                            ],
-//                            'type' => 'files',
-//                            'server' => 'upload',
-//                            'accept' => '*/*',
-//                        ],
-//                    ])
-                    ?>
-
-
                     <?php
                     $m1 = new \common\models\common\WatchingPackage([
                             'link_name' => '',
@@ -49,12 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]); ?>
 
                     <?= $form->field($m1, 'link_name',[
-                            //"placeholder" => '多個關機字已 $ 進行分割'
-                    ]) ?>多個關機字已 $ 進行分割
+                        //'template'=>"<div>{input}{label}</div>",
+                    ])->label('关键字搜索')->textInput([
+                        "placeholder" => '多個  $ 進行分割'
+                    ]) ?>
 
-                    <div class="form-group">
-                        <?= Html::submitButton('新增关键字搜索') ?>
-                    </div>
+                   <?= Html::submitButton('新增关键字搜索') ?>
 
                     <?php \yii\bootstrap\ActiveForm::end(); ?>
                 </h3>

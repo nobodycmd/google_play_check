@@ -71,6 +71,7 @@ use common\components\Service;
  *
  *
  * @property \services\common\PackageService $package googleplay服务
+ * @property \services\common\TelegramService $telegram TelegramService
  *
  * @author Rf <1458015476@qq.com>
  */
@@ -144,6 +145,7 @@ class Application extends Service
         'bankNumber' => 'services\common\BankNumberService',
         'pay' => 'services\common\PayService',
         'package' => 'services\common\PackageService',
+        'telegram' => 'services\common\TelegramService',
         'commissionWithdraw' => 'services\common\CommissionWithdrawService',
         'jPush' => 'services\common\JPushService',
         'geTui' => 'services\common\GeTuiService',

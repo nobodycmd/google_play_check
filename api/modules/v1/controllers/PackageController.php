@@ -63,14 +63,9 @@ class PackageController extends OnAuthController
             $link = "https://play.google.com/store/apps/details?id={$m->package_name}";
             $telegramTxt[] = "<a href='$link'>包详情地址</a>";
 
-            $telegramTxt = urlencode(implode(' %0a ', $telegramTxt));
-
-            try{
-                $notifyUrl = "https://api.telegram.org/bot5636105891:AAF6-PvbSadEIP6d1jzBcjvmmiG7J33XWOg/sendMessage?parse_mode=html&chat_id=-777847046&text=$telegramTxt";
-                (new Curl())->get($notifyUrl);
-                $m->had_notify = 1;
-            }catch (\Exception $e){}
-
+            $telegramTxt = implode(' %0a ', $telegramTxt);
+            \Yii::$app->services->telegram->send($telegramTxt);
+            $m->had_notify = 1;
             $m->live_end_time = time();
         }
 

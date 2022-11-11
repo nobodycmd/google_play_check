@@ -148,7 +148,7 @@ class gp(object):
             except:
                 contact = '-'
             try:
-                des = self.driver.find_element(By.CLASS_NAME,'SfzRHd').get_attribute('innerHTML')
+                des = self.driver.find_element(By.CLASS_NAME,'bARER').get_attribute('innerHTML')
             except:
                 des = '-'
             
