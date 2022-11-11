@@ -151,10 +151,15 @@ class gp(object):
                 desc = self.driver.find_element(By.CLASS_NAME,'bARER').get_attribute('innerHTML')
             except:
                 desc = '-'
+            try:
+                update_time = self.driver.find_element(By.CLASS_NAME,'TKjAsc').get_attribute('innerHTML')
+            except:
+                update_time = '-'
             
             params['download'] = download
             params['contact'] = contact
             params['desc'] = desc
+            params['update_time'] = update_time
 
             urllib.request.urlopen(self.api + "/package/save?"+ urlencode(params))
             

@@ -84,6 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_down',
             'check_datetime:datetime',//create_time
             'create_time:datetime',
+            'update_time',
             'position',
             'download',
 //            'contact:html',
@@ -108,7 +109,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         return  round(($model->live_end_time - $model->create_time)/24*3600,2)  . '天';
                 }
             ],
-            'desc:html',
 //            'had_notify',
             [ 'attribute' => 'priority', 'class'=>'kartik\grid\EditableColumn', ],
 //            [
@@ -118,6 +118,16 @@ $this->params['breadcrumbs'][] = $this->title;
 //                ],
 //            ],
 //            'jobid',
+            'desc:html',
+            [
+                    'header' => '详情',
+                'value' => function($model){
+        $s = "<div id='des{$model->id}' style='display: none'>{$model->desc}</div>";
+        $s .= "<a onclick=\"document.getElementById('des{$model->id}').style.display = document.getElementById('des{$model->id}').style.display=='none'?'':'none'\">查看详情</a>";
+        return $s;
+                },
+                'format' => 'raw',
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
