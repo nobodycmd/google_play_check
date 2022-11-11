@@ -148,13 +148,13 @@ class gp(object):
             except:
                 contact = '-'
             try:
-                des = self.driver.find_element(By.CLASS_NAME,'bARER').get_attribute('innerHTML')
+                desc = self.driver.find_element(By.CLASS_NAME,'bARER').get_attribute('innerHTML')
             except:
-                des = '-'
+                desc = '-'
             
             params['download'] = download
             params['contact'] = contact
-            params['des'] = des
+            params['desc'] = desc
 
             urllib.request.urlopen(self.api + "/package/save?"+ urlencode(params))
             

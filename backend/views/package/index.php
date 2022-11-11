@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="alert alert-info">
             当前队列数量为<?= count(\common\models\common\Queue::find()->where('1=1')->all()) ?>
             <br>
-            系统自动每隔一段时间 自动 重置队列进行包检查
+            系统每隔一段时间 自动 重置队列进行包检查
         </div>
         <div class="box">
             <div class="box-header">
@@ -108,15 +108,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         return  round(($model->live_end_time - $model->create_time)/24*3600,2)  . '天';
                 }
             ],
-            'had_notify',
+            'desc:html',
+//            'had_notify',
             [ 'attribute' => 'priority', 'class'=>'kartik\grid\EditableColumn', ],
-            [
-                'attribute' => 'queue_status',
-                'filter' => [
-                        '未入队列','已入队列'
-                ],
-            ],
-            'jobid',
+//            [
+//                'attribute' => 'queue_status',
+//                'filter' => [
+//                        '未入队列','已入队列'
+//                ],
+//            ],
+//            'jobid',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
