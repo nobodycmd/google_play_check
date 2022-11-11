@@ -67,20 +67,12 @@ class PackageController extends BaseController
             $m = new WatchingPackage();
             $m->load(Yii::$app->request->post());
 
-            $pythonfile = Yii::getAlias("@root/web/watchingapp/google_play.py");
-
             $i = 0;
             $aryKey = explode('$', trim($m->link_name));
             foreach ($aryKey as $key) {
 
-                $key = str_replace(' ', '-', $key);
-                if (StringHelper::isWindowsOS())
-                    $cmd = " python {$pythonfile} $key";
-                else
-                    $cmd = " python3 {$pythonfile} $key";
-
                 $jobid = Yii::$app->services->package->getQueue('q0')->push(new PackageSearchJob([
-                    'cmd' => $cmd,
+                    'key' => $key,
                 ]));
 
                 if($jobid){

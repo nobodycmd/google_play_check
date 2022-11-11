@@ -39,11 +39,8 @@ class PackageCheckJob extends BaseObject implements \yii\queue\JobInterface
             else
                 $cmd = " python3 {$pythonfile} $key check";
 
-
-            echo $cmd . PHP_EOL;
-
             putenv("PYTHONIOENCODING=utf-8");
-            exec($cmd, $output);
+            exec($cmd);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
