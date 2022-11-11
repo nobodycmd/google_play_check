@@ -7,6 +7,7 @@ use common\helpers\ResultHelper;
 use common\helpers\StringHelper;
 use common\helpers\UploadHelper;
 use common\models\common\Attachment;
+use common\models\common\Queue;
 use common\queues\PackageSearchJob;
 use Yii;
 use common\models\common\WatchingPackage;
@@ -56,8 +57,9 @@ class PackageController extends BaseController
 
     public function actionReset(){
 
+        Queue::deleteAll('1=1');
         $i = Yii::$app->services->package->reset();
-        Yii::$app->session->setFlash('success', '已放入队列'.$i.'个包');
+        Yii::$app->session->setFlash('success', '已放入队列'.$i.'个包进行检查');
 
         return $this->redirect(['index']);
     }

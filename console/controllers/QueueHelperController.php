@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\common\Queue;
 use common\traits\QueueTrait;
 use Yii;
 
@@ -19,4 +20,13 @@ require_once Yii::getAlias("@root/vendor/yiisoft/yii2-queue/src/drivers/db/Comma
 class QueueHelperController extends yii\queue\db\Command
 {
     use QueueTrait;
+
+    public function actionReset(){
+        while (true){
+            if(Queue::find()->count() == 0){
+                Yii::$app->services->package->reset();
+            }
+            sleep(600);
+        }
+    }
 }

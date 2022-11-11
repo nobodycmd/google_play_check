@@ -19,7 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="alert alert-info">当前队列数量为<?= count(\common\models\common\Queue::find()->where('1=1')->all()) ?></div>
+        <div class="alert alert-info">
+            当前队列数量为<?= count(\common\models\common\Queue::find()->where('1=1')->all()) ?>
+            <br>
+            系统自动每隔一段时间 自动 重置队列进行包检查
+        </div>
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">
@@ -43,8 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?php \yii\bootstrap\ActiveForm::end(); ?>
                 </h3>
+
                 <div class="box-tools">
-                    <?= Html::linkButton(['reset'],'刷新队列') ?>
+                    <?= Html::linkButton(['reset'],'重置队列') ?>
                 </div>
             </div>
 
