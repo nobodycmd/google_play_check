@@ -31,17 +31,9 @@ class PackageController extends OnAuthController
     public function actionSave()
     {
         $ary = \Yii::$app->request->get();
-        if(isset($ary['link_name'])){
-            $m = WatchingPackage::findOne([
-                'package_name' => $ary['package_name'],
-                'link_name' => $ary['link_name']
-            ]);
-        }
-        else {
-            $m = WatchingPackage::findOne([
-                'package_name' => $ary['package_name'],
-            ]);
-        }
+        $m = WatchingPackage::findOne([
+            'package_name' => $ary['package_name'],
+        ]);
         if(!$m)
         {
             $m = new WatchingPackage();
@@ -72,7 +64,7 @@ class PackageController extends OnAuthController
         if ( $m->save() == false ){
             return $m->errors;
         }
-        return isset($notifyUrl) ?$notifyUrl: 'okay';
+        return isset($notifyUrl) ?  $notifyUrl: 'okay';
     }
 
     /**

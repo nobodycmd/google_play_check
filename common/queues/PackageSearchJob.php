@@ -24,6 +24,6 @@ class PackageSearchJob extends BaseObject implements \yii\queue\JobInterface
 
         putenv("PYTHONIOENCODING=utf-8");
         exec($this->cmd, $output);
-        echo $output;
+        @file_put_contents(Yii::getAlias("@root/web/log_search"),json_encode($output));
     }
 }
