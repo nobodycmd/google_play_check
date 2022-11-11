@@ -41,7 +41,7 @@ class CheckServerController extends Controller
                 }catch (\Exception $e){
                 }
             }
-            sleep(1);
+            sleep(600);
         }
     }
 }
