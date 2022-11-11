@@ -117,7 +117,7 @@ class PackageController extends BaseController
             'model' => $this->modelClass,
             'scenario' => 'default',
             'partialMatchAttributes' => [
-                'package_name','link_name','name',
+                'package_name','link_name','name','contact','update_time','company'
             ], // 模糊查询
             'defaultOrder' => [
                 'id' => SORT_DESC
