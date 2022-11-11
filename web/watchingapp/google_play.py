@@ -16,7 +16,7 @@ import io
 from io import BytesIO
 import sys
 import urllib.request
-import random
+from urllib.parse import urlencode
 
 class gp(object):
     def __init__(self):
