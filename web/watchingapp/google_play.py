@@ -140,7 +140,7 @@ class gp(object):
 
             #详情数据
             try:
-                download = self.driver.find_element(By.CLASS_NAME,'ClM7O').get_attribute('textContent')
+                download = self.driver.find_element(By.CLASS_NAME,'wVqUob').get_attribute('textContent')
             except:
                 download = '-'
             try:
