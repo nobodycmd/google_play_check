@@ -85,8 +85,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'check_datetime:datetime',//create_time
             'create_time:datetime',
             [
-                    'header'=>'包更新时间',
-                'attribute' => 'update_time'
+                    'header'=>'新包时间',
+                'attribute' => 'update_time',
+                'format' => 'html',
             ],
             'position',
             'download',
