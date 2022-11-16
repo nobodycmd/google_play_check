@@ -29,6 +29,7 @@ class PackageService extends Service
     {
         $list = WatchingPackage::find()->orderBy('priority desc')->andWhere([
             //'queue_status' => self::STATUS_W,
+            'is_down' => 0
         ])->all();
 
         $i = 0;
