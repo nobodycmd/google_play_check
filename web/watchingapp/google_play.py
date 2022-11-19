@@ -78,7 +78,7 @@ class gp(object):
                 package_name = href.split('id=')[1]
                 position += 1
                 
-                a.screenshot("icon/" + package_name + '.png')
+                # a.screenshot("icon/" + package_name + '.png')
 
 
                 appname = a.find_element(By.CLASS_NAME,'DdYX5').get_attribute('textContent')
