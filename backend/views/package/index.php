@@ -108,9 +108,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'header' => '存活',
-                'value' => function($model){
-                    if($model->live_end_time > 0 )
-                        return  round(($model->live_end_time - $model->create_time)/24*3600,2)  . '天';
+                'value' => function($m){
+                    $liveTime = '未知';
+                    if($m->update_time)
+                    {
+                        try{
+                            $hr = ($m->live_end_time - strtotime(str_replace("","",$m->update_time))) / 3600;
+                            $liveTime = $hr.'小时';
+                        }catch (\Exception $e){}
+                    }else{
+                        try{
+                            $hr = ($m->live_end_time - $m->create_time) / 3600;
+                            $liveTime = $hr.'小时';
+                        }catch (\Exception $e){}
+                    }
+
+                    return $m->is_down ? $liveTime : '';
                 }
             ],
 //            'had_notify',

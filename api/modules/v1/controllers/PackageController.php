@@ -43,19 +43,54 @@ class PackageController extends OnAuthController
             $m->create_time = time();
             $m->queue_status = \Yii::$app->services->package::STATUS_W;
             $m->check_datetime = time();
+            $m->is_down = 0;
+
+            $telegramTxt[] = "<b>事件：发现新包上架</b>";
+            $telegramTxt[] = '时间：' . date('Y-m-d H:i:s');
+            $telegramTxt[] = '新包' . $m->package_name . ' 名称 ' . $m->name;
+            $telegramTxt[] = '搜索名称' . $m->link_name;
+            $link = "https://play.google.com/store/apps/details?id={$m->package_name}";
+            $telegramTxt[] = "<a href='$link'>包详情地址</a>";
+            $telegramTxt = implode("%0a", $telegramTxt);
+            \Yii::$app->services->telegram->send($telegramTxt);
         }else{
             $m->check_datetime = time();
+            if(intval($m->getOldAttribute("is_down")) === 1 && !$m->is_down  ){
+                $telegramTxt[] = "<b>事件：发现包重新上架</b>";
+                $telegramTxt[] = '时间：' . date('Y-m-d H:i:s');
+                $telegramTxt[] = '包' . $m->package_name ;
+                $link = "https://play.google.com/store/apps/details?id={$m->package_name}";
+                $telegramTxt[] = "<a href='$link'>包详情地址</a>";
+                $telegramTxt = implode("%0a", $telegramTxt);
+                \Yii::$app->services->telegram->send($telegramTxt);
+            }
         }
 
         if($m->is_down){
             $telegramTxt[] = "<b>google play 包下架通知</b>";
             $telegramTxt[] = '时间：' . date('Y-m-d H:i:s');
+            $liveTime = '未知';
+            if($m->update_time)
+            {
+                $telegramTxt[] = "上架时间：" . $m->update_time;
+                try{
+                    $hr = (time() - strtotime(str_replace("","",$m->update_time))) / 3600;
+                    $liveTime = $hr.'小时';
+                }catch (\Exception $e){}
+            }else{
+                $telegramTxt[] = "上架时间：" . $m->update_time;
+                try{
+                    $hr = (time() - $m->create_time) / 3600;
+                    $liveTime = $hr.'小时';
+                }catch (\Exception $e){}
+            }
+            $telegramTxt[] = "存活时间：" . $liveTime;
             $telegramTxt[] = '包' . $m->package_name . ' 名称 ' . $m->name;
             $telegramTxt[] = '搜索名称' . $m->link_name;
             $link = "https://play.google.com/store/apps/details?id={$m->package_name}";
             $telegramTxt[] = "<a href='$link'>包详情地址</a>";
 
-            $telegramTxt = implode(' %0a ', $telegramTxt);
+            $telegramTxt = implode("%0a", $telegramTxt);
             \Yii::$app->services->telegram->send($telegramTxt);
             $m->had_notify = 1;
             $m->live_end_time = time();

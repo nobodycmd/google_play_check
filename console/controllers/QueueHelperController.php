@@ -3,6 +3,8 @@
 namespace console\controllers;
 
 use common\models\common\Queue;
+use common\models\common\WatchingPackage;
+use common\queues\PackageSearchJob;
 use common\traits\QueueTrait;
 use Yii;
 
@@ -27,6 +29,16 @@ class QueueHelperController extends yii\queue\db\Command
                 Yii::$app->services->package->reset();
             }
             sleep(600);
+        }
+    }
+
+    public function actionSearch(){
+        $list = WatchingPackage::find()->select('link_name')->distinct()->all();
+        /** @var WatchingPackage $one */
+        foreach ($list as $one){
+            Yii::$app->services->package->getQueue('q0')->push(new PackageSearchJob([
+                'key' => $one->link_name,
+            ]));
         }
     }
 }
