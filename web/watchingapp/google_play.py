@@ -173,12 +173,11 @@ class gp(object):
 
             #self.driver.quit() #退出列表页
 
-            for name in list_name:
+            for package_name in list_name:
                 params = self.check(package_name=package_name,just_return=True)
                 print(params)
                 if params["is_down"] == 0:
                     requests.post(self.api + "/package/save",params=params)
-
             
         except Exception as e:
             print('异常信息')
