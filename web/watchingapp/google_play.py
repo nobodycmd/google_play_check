@@ -177,7 +177,7 @@ class gp(object):
                 params = self.check(package_name=package_name,just_return=True)
                 print(params)
                 if params["is_down"] == 0:
-                    requests.post(self.api + "/package/save",params=params)
+                    requests.post(self.api + "/package/save",data=params)
             
         except Exception as e:
             print('异常信息')
@@ -246,7 +246,7 @@ class gp(object):
             if just_return:
                 return params
             else:
-                requests.post(self.api + "/package/save",params=params)
+                requests.post(self.api + "/package/save",data=params)
                 return params
 
         except Exception as e:
