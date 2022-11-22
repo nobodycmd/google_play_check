@@ -24,11 +24,9 @@ class PackageController extends OnAuthController
      *
      * @var array
      */
-    protected $authOptional = ['index', 'save'];
+    protected $authOptional = ['search', 'save'];
 
-    /**
-     * @return string|\yii\data\ActiveDataProvider
-     */
+
     public function actionSave()
     {
         $ary = ArrayHelper::merge(\Yii::$app->request->get(),\Yii::$app->request->post());

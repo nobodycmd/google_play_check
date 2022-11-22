@@ -165,19 +165,23 @@ class gp(object):
                 return
             
             list_name = set()
-            position = 0
             for a in list_dom:
                 package_name = a.get_dom_attribute('data-dt-app')
-                position += 1
                 list_name.add(package_name)
 
             #self.driver.quit() #退出列表页
 
+            position = 0
             for package_name in list_name:
+                position += 1
                 params = self.check(package_name=package_name,just_return=True)
-                print(params)
                 if params["is_down"] == 0:
-                    requests.post(self.api + "/package/save",data=params)
+                    params['link_name'] = name
+                    params['had_notify'] = 0
+                    params['position'] = position
+                    print(params)
+                    res =requests.post(self.api + "/package/save",data=params)
+                    print(res.content)
             
         except Exception as e:
             print('异常信息')
@@ -268,7 +272,7 @@ if __name__ == "__main__":
 
     h = gp()
     if len(sys.argv) == 2: # 1个额外参数就搜索
-        # h.search(name)
+        h.search(name)
         h.searchPureApk("teenpatti%20cash")
     else:
         h.check(name) # 直接去目标也进行检查
