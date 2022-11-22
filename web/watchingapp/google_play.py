@@ -120,8 +120,7 @@ class gp(object):
 
     def searchPureApk(self,name):
         try:
-            url="https://apkpure.com/cn/search?t=app&q="+name
-            # url="https://apkpure.com/cn/search-page?q="+name+"&t=app&begin=10"
+            url="https://apkpure.com/cn/search?"+urlencode({"q":name,"t":"app"})
             self.driver.get(url)
 
             time.sleep(2)
@@ -273,7 +272,7 @@ if __name__ == "__main__":
     h = gp()
     if len(sys.argv) == 2: # 1个额外参数就搜索
         h.search(name)
-        h.searchPureApk("teenpatti%20cash")
+        h.searchPureApk("teenpatti cash")
     else:
         h.check(name) # 直接去目标也进行检查
 
