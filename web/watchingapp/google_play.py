@@ -39,13 +39,13 @@ class gp(object):
 
         # docker run -tid --name selenium-standalone-chrome -h selenium-standalone-chrome --memory 1g --shm-size="1g" --memory-swap -1 -p 9515:4444 selenium/standalone-chrome
         #self.driver = webdriver.Chrome(executable_path=r"F:\下载\chromedriver.exe", chrome_options=chrome_option)
-        self.driver = webdriver.Chrome(executable_path=r"C:\Users\Administrator\AppData\Local\MyChrome\Chrome\Application\chromedriver.exe",chrome_options=chrome_option)
+        # self.driver = webdriver.Chrome(executable_path=r"C:\Users\Administrator\AppData\Local\MyChrome\Chrome\Application\chromedriver.exe",chrome_options=chrome_option)
         #chrome_option.add_argument('--no-sandbox')       
 
-        # port = random.randint(9515,9517)
-        # port = str(port)
-        # self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
-        # self.driver.set_window_size(1440, 900)
+        port = random.randint(9515,9517)
+        port = str(port)
+        self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
+        self.driver.set_window_size(1440, 900)
 
         self.api = 'http://gg.lucktp.com/api/v1'
 
