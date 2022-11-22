@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use api\controllers\OnAuthController;
 use common\enums\StatusEnum;
+use common\helpers\ArrayHelper;
 use common\helpers\UploadHelper;
 use common\models\common\WatchingPackage;
 use linslin\yii2\curl\Curl;
@@ -30,7 +31,7 @@ class PackageController extends OnAuthController
      */
     public function actionSave()
     {
-        $ary = \Yii::$app->request->get();
+        $ary = ArrayHelper::merge(\Yii::$app->request->get(),\Yii::$app->request->post());
         $m = WatchingPackage::findOne([
             'package_name' => $ary['package_name'],
         ]);

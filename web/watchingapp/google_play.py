@@ -11,12 +11,14 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 # from PIL import Image
-# import requests
+import requests
 import io
 from io import BytesIO
 import sys
 import urllib.request
 from urllib.parse import urlencode
+from bs4 import BeautifulSoup
+
 
 class gp(object):
     def __init__(self):
@@ -37,13 +39,13 @@ class gp(object):
 
         # docker run -tid --name selenium-standalone-chrome -h selenium-standalone-chrome --memory 1g --shm-size="1g" --memory-swap -1 -p 9515:4444 selenium/standalone-chrome
         #self.driver = webdriver.Chrome(executable_path=r"F:\下载\chromedriver.exe", chrome_options=chrome_option)
-        
+        self.driver = webdriver.Chrome(executable_path=r"C:\Users\Administrator\AppData\Local\MyChrome\Chrome\Application\chromedriver.exe",chrome_options=chrome_option)
         #chrome_option.add_argument('--no-sandbox')       
 
-        port = random.randint(9515,9517)
-        port = str(port)
-        self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
-        self.driver.set_window_size(1440, 900)
+        # port = random.randint(9515,9517)
+        # port = str(port)
+        # self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
+        # self.driver.set_window_size(1440, 900)
 
         self.api = 'http://gg.lucktp.com/api/v1'
 
@@ -115,20 +117,97 @@ class gp(object):
         finally:
             self.driver.quit()
 
-    def check(self, package_name):
+
+    def searchPureApk(self,name):
+        try:
+            url="https://apkpure.com/cn/search?t=app&q="+name
+            # url="https://apkpure.com/cn/search-page?q="+name+"&t=app&begin=10"
+            self.driver.get(url)
+
+            time.sleep(2)
+
+            #首次点击更多
+            try:
+                if self.driver.find_element(By.ID,"policy-info").is_displayed():
+                    print("点击同意")
+                    self.driver.find_element(By.ID,"policy-info").find_element(By.PARTIAL_LINK_TEXT,'Agree').click()
+            except:
+                pass
+            
+            #首次点击更多
+            self.driver.find_element(By.CLASS_NAME,'showmore-apps').click()
+
+            time.sleep(5)
+            #一直点击更多直到没有更多
+            try:
+                while self.driver.find_element(By.XPATH,"//a[@class='loadmore showmore sa-apps-div']") and self.driver.find_element(By.XPATH,"//a[@class='loadmore showmore sa-apps-div']").is_displayed():
+                    self.driver.find_element(By.XPATH,"//a[@class='loadmore showmore sa-apps-div']").click()
+                    time.sleep(3)
+                    self.driver.execute_script("window.scrollTo(0, document.documentElement.clientHeight)")
+                    time.sleep(3)
+            except:
+                pass
+            
+            with open("apkpure.html",'w+',encoding="utf-8") as f:
+                f.write(self.driver.page_source)
+                # return
+
+            list_dom = self.driver.find_elements(By.XPATH,'//a[@class="more-down is-download"]')
+            
+            result_l = len(list_dom)
+            print("列表结果个数",result_l)
+
+            if result_l == 0:
+                # _t = random.random()*10 + 3
+                # print('休息'+str(_t)+'秒后继续重试')
+                # time.sleep(_t)
+                # self.searchPureApk(name)
+                return
+            
+            list_name = set()
+            position = 0
+            for a in list_dom:
+                package_name = a.get_dom_attribute('data-dt-app')
+                position += 1
+                list_name.add(package_name)
+
+            #self.driver.quit() #退出列表页
+
+            for name in list_name:
+                params = self.check(package_name=package_name,just_return=True)
+                print(params)
+                if params["is_down"] == 0:
+                    requests.post(self.api + "/package/save",params=params)
+
+            
+        except Exception as e:
+            print('异常信息')
+            print(e)
+            #unable to connect
+            #unknown error
+            #page crash
+            #net::ERR_CONNECTION_REFUSED
+            # 包含这个文字应该重试
+        finally:
+            self.driver.quit()
+
+
+
+
+
+
+    def check(self, package_name, just_return=False):
         try:
             url="https://play.google.com/store/apps/details?id="+package_name
-            
             self.driver.get(url)
 
             # button = WebDriverWait(self.driver,3).until(EC.element_to_be_clickable ((By.XPATH,'//*[@id="qqLoginTab"]')))
             # button.click() #点击登录
             time.sleep(2)
-
-            self.driver.save_screenshot("detail/"+package_name+".png")
+            
             
             try:#可正常找到错误提示，说明已经下架
-                dom = self.driver.find_element(By.XPATH,'//div[@id="error-section"]')
+                self.driver.find_element(By.XPATH,'//div[@id="error-section"]')
                 is_down = 1
             except:
                 is_down = 0
@@ -160,15 +239,24 @@ class gp(object):
             params['contact'] = contact
             params['desc'] = desc
             params['update_time'] = update_time
+            try:
+                params['name'] = self.driver.find_element(By.TAG_NAME,'h1').get_attribute('textContent')
+            except:
+                pass
 
-            urllib.request.urlopen(self.api + "/package/save?"+ urlencode(params))
-            
+            if just_return:
+                return params
+            else:
+                requests.post(self.api + "/package/save",params=params)
+                return params
 
         except Exception as e:
             print(e)    
         finally:
-            self.driver.quit()
-
+            if just_return:
+                pass
+            else:
+                self.driver.quit()
 
 # python google_play.py whatsapp 
 if __name__ == "__main__":
@@ -181,7 +269,8 @@ if __name__ == "__main__":
 
     h = gp()
     if len(sys.argv) == 2: # 1个额外参数就搜索
-        h.search(name)
+        # h.search(name)
+        h.searchPureApk("teenpatti%20cash")
     else:
         h.check(name) # 直接去目标也进行检查
 
