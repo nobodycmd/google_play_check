@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'update_time',
                 'format' => 'html',
             ],
-//            'position',
+//            'company',
             'download',
 //            'contact:html',
             [
@@ -135,15 +135,15 @@ $this->params['breadcrumbs'][] = $this->title;
 //                ],
 //            ],
 //            'jobid',
-            [
-                    'header' => '详情',
-                'value' => function($model){
-        $s = "<div id='des{$model->id}' style='display: none'  onclick=\"document.getElementById('des{$model->id}').style.display = 'none'\">{$model->desc}</div>";
-        $s .= "<a onclick=\"document.getElementById('des{$model->id}').style.display = document.getElementById('des{$model->id}').style.display=='none'?'':'none'\">查看详情</a>";
-        return $s;
-                },
-                'format' => 'raw',
-            ],
+//            [
+//                    'header' => '详情',
+//                'value' => function($model){
+//        $s = "<div id='des{$model->id}' style='display: none'  onclick=\"document.getElementById('des{$model->id}').style.display = 'none'\">{$model->desc}</div>";
+//        $s .= "<a onclick=\"document.getElementById('des{$model->id}').style.display = document.getElementById('des{$model->id}').style.display=='none'?'':'none'\">查看详情</a>";
+//        return $s;
+//                },
+//                'format' => 'raw',
+//            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
