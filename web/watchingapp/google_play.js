@@ -34,7 +34,8 @@
  
  gplay.search({
      term: input_term,
-     num: input_limit
+     num: input_limit,
+    //  country:'us',
  }).then(save_std, save_err);
  
  
