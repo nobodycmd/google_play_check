@@ -38,6 +38,8 @@ class PackageSearchJob extends BaseObject implements \yii\queue\JobInterface
             $nodejsfile = Yii::getAlias("@root/web/watchingapp/google_play.js");
             $cmd = "node {$nodejsfile} \"{$this->key}\" 120";
             exec($cmd, $output);
-        }catch (\Exception $e){}
+        }catch (\Exception $e){
+            echo $e->getMessage();
+        }
     }
 }
