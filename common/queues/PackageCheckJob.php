@@ -7,6 +7,7 @@ use common\models\common\Queue;
 use common\models\common\WatchingPackage;
 use Yii;
 use yii\base\BaseObject;
+use yii\log\Logger;
 
 
 class PackageCheckJob extends BaseObject implements \yii\queue\JobInterface
@@ -42,7 +43,8 @@ class PackageCheckJob extends BaseObject implements \yii\queue\JobInterface
             putenv("PYTHONIOENCODING=utf-8");
             exec($cmd);
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            @Yii::getLogger()->log($e->getMessage(),Logger::LEVEL_ERROR);
+            @file_put_contents(Yii::getAlias("@root/web/")."/checkpackagejob_err",$e->getMessage());
         }
     }
 }
