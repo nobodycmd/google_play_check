@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'update_time',
                 'format' => 'html',
             ],
-            'company',
+//            'company',
             'download',
 //            'contact:html',
             [
