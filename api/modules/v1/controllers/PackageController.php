@@ -9,6 +9,7 @@ use common\helpers\UploadHelper;
 use common\models\common\WatchingPackage;
 use linslin\yii2\curl\Curl;
 use Symfony\Component\HttpFoundation\UrlHelper;
+use yii\db\Exception;
 use function Swoole\Coroutine\escape;
 use function Swoole\Coroutine\Http\get;
 
@@ -24,7 +25,7 @@ class PackageController extends OnAuthController
      *
      * @var array
      */
-    protected $authOptional = ['search', 'save'];
+    protected $authOptional = ['search', 'save','save-from-nodejs'];
 
 
     public function actionSave()
@@ -99,6 +100,49 @@ class PackageController extends OnAuthController
             return $m->errors;
         }
         return isset($notifyUrl) ?  $notifyUrl: 'okay';
+    }
+
+
+    public function actionSaveFromNodejs()
+    {
+        $ary = ArrayHelper::merge(\Yii::$app->request->get(),\Yii::$app->request->post());
+
+        foreach ($ary as $one) {
+            $name = $one['title'];
+            $package_name = $one['appId'];
+
+            $m = WatchingPackage::findOne([
+                'package_name' => $package_name,
+            ]);
+            if (!$m) {
+                $m = new WatchingPackage();
+            }
+            $m->setAttributes($one, false);
+            $m->name = $name;
+
+            if ($m->isNewRecord) {
+                $m->create_time = time();
+                $m->queue_status = \Yii::$app->services->package::STATUS_W;
+                $m->check_datetime = time();
+                $m->is_down = 0;
+
+                $telegramTxt[] = "<b>事件：发现新包上架</b>";
+                $telegramTxt[] = '时间：' . date('Y-m-d H:i:s');
+                $telegramTxt[] = '新包' . $m->package_name . ' 名称 ' . $m->name;
+                $telegramTxt[] = '搜索名称' . $m->link_name;
+                $link = "https://play.google.com/store/apps/details?id={$m->package_name}";
+                $telegramTxt[] = "<a href='$link'>包详情地址</a>";
+                $telegramTxt = implode("%0a", $telegramTxt);
+                \Yii::$app->services->telegram->send($telegramTxt);
+            } else {
+                $m->check_datetime = time();
+            }
+
+            if ($m->save() == false) {
+                throw new Exception(json_encode($m->errors));
+            }
+        }
+        return  'okay';
     }
 
     /**

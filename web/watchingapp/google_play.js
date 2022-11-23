@@ -3,7 +3,7 @@
  * 
  * npm install google-play-scraper
  */
-
+ var request = require('request');
 
  var argv = process.argv.slice(2);
  console.log(argv)
@@ -12,7 +12,10 @@
  
  function save_std(data) {
      //var json_string_results = JSON.stringify(data);
-     console.log(data);
+    console.log(data);
+    request.post('http://gg.lucktp.com/api/v1/package/save-from-nodejs',data,function (error, response, body) {
+        console.log(body);
+    });
  }
  
  

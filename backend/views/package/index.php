@@ -79,17 +79,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
-            'link_name',
-            'star',
+//            'link_name',
+//            'star',
             'is_down',
-            'check_datetime:datetime',//create_time
-            'create_time:datetime',
+//            'check_datetime:datetime',
+//            'create_time:datetime',
             [
-                    'header'=>'新包时间',
+                'header'=>'新包时间',
                 'attribute' => 'update_time',
                 'format' => 'html',
             ],
-            'position',
+//            'position',
             'download',
 //            'contact:html',
             [
@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 //            'had_notify',
-            [ 'attribute' => 'priority', 'class'=>'kartik\grid\EditableColumn', ],
+//            [ 'attribute' => 'priority', 'class'=>'kartik\grid\EditableColumn', ],
 //            [
 //                'attribute' => 'queue_status',
 //                'filter' => [

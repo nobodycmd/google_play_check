@@ -43,12 +43,8 @@ class WatchingPackage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['package_name', 'link_name', 'is_down', 'position', 'had_notify'], 'required'],
-            [['is_down', 'position', 'had_notify', 'priority', 'check_datetime', 'create_time', 'live_end_time'], 'integer'],
-            [['star'], 'number'],
-            [['contact', 'desc'], 'string'],
-            [['package_name', 'link_name', 'name', 'company', 'download'], 'string', 'max' => 255],
-            [['queue_status', 'jobid', 'update_time'], 'string', 'max' => 500],
+            [['package_name'], 'required'],
+            [['name','package_name'],'string'],
         ];
     }
 
