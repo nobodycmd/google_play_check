@@ -119,8 +119,8 @@ class PackageController extends OnAuthController
             }
             $m->setAttributes($one, false);
             $m->name = $name;
-
             if ($m->isNewRecord) {
+                $m->link_name = $m->name;
                 $m->create_time = time();
                 $m->queue_status = \Yii::$app->services->package::STATUS_W;
                 $m->check_datetime = time();

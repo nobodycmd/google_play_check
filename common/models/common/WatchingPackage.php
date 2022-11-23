@@ -44,7 +44,7 @@ class WatchingPackage extends \yii\db\ActiveRecord
     {
         return [
             [['package_name'], 'required'],
-            [['name','package_name'],'string'],
+            [['name','package_name','link_name'],'string'],
         ];
     }
 
