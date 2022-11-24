@@ -53,7 +53,7 @@ $packagename = isset($_GET['packagename']) ? $_GET['packagename'] : 'io.renren.m
                 }
                 </script>
         <div class="form-group">
-            <label class="form-control">常用数据库</label>
+            <label class="form-control">常用数据库<a href="<?= \common\helpers\Url::to(['clear']) ?>">清空</a></label>
             <?=\common\helpers\Html::dropDownList("conns","",$aryConn,[
                     'text' => '选择常用数据库',
                     'onchange' => 'c(this)',

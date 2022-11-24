@@ -134,6 +134,11 @@ class SiteController extends Controller
         return $model;
     }
 
+    public function actionClear(){
+        Yii::$app->getSession()->removeAll();
+        return $this->redirect('/');
+    }
+
     /**
      * Displays homepage.
      *
