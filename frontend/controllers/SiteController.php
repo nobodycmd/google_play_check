@@ -153,6 +153,7 @@ class SiteController extends Controller
                 "password" => $model->password,
                 'charset' => 'utf8',
             ];
+            Yii::$app->getSession()->set("conn", $config);
         }
 
 
@@ -168,7 +169,6 @@ class SiteController extends Controller
                         $tables[] = $one['TABLE_NAME'];
                     }
                 }
-                Yii::$app->getSession()->set("conn", $config);
                 $this->addConn($config);
             }catch (\Exception $e){
                 Yii::$app->session->setFlash('error', $e->getMessage());
