@@ -26,43 +26,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-        ['label' => Yii::t('app', 'About'), 'url' => ['/site/about']],
-        ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+    <div class="container-fluid">
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -71,10 +35,9 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">
-            <?= Html::encode(Yii::$app->debris->backendConfig('web_copyright')) ?>
-            ICP证：<a href="http://www.beian.miit.gov.cn" target="_blank"><?= Html::encode(Yii::$app->debris->backendConfig('web_site_icp')) ?></a>
+            https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
         </p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">pecl install pdo_sqlsrv 或 https://github.com/microsoft/msphpsql/releases</p>
     </div>
 </footer>
 
