@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\ArrayHelper;
 use frontend\forms\DbinfoForm;
 use Yii;
 use yii\db\Connection;
@@ -107,7 +108,10 @@ class SiteController extends Controller
         if($conns == false){
             $conns = [];
         }
-        $conns[] = $config['dsn'];
+        if(ArrayHelper::isIn($config['dsn'],$conns) == false)
+        {
+            $conns[] = $config['dsn'];
+        }
         Yii::$app->getSession()->set("conns",$conns);
     }
 
