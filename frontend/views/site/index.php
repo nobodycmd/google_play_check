@@ -96,7 +96,7 @@ $packagename = isset($_GET['packagename']) ? $_GET['packagename'] : 'io.renren.m
                     <?php
                     foreach ($tables as $one){
                     ?>
-                   <li> <a onclick="go('<?= $one ?>')"><?= $one ?></a> </li>
+                   <li> <a onclick="go('<?= $one ?>')" href="javascript:"><?= $one ?></a> </li>
                     <?php
                     }
                     ?>
