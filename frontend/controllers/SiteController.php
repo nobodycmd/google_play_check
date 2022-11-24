@@ -239,7 +239,7 @@ $resultFields = $conn->createCommand($sql)->queryAll();
         }
 
         return $this->render('index', [
-            'conns' => array_unique(Yii::$app->getSession()->get("conns")),
+            'conns' => Yii::$app->getSession()->get("conns") ? array_unique(Yii::$app->getSession()->get("conns")) : [],
             'model' => $model,
             'tables' => $tables,
             'tableName' => $tableName,
